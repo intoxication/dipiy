@@ -1,0 +1,55 @@
+<% title_tag @user.fullname %>
+
+<div class="row">
+  <%= render "sidebar", user: @user %>
+
+  <div class="col-md-8">
+    <%= render "menu" %>
+
+    <%= render "info" %>
+
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#topics" data-toggle="tab">Hot topic</a></li>
+        <li><a href="#replies" data-toggle="tab">Recently Replies</a></li>
+        <li><a href="#description" data-toggle="tab">Self introduction</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active recent-topics" id="topics">
+          <div class="panel panel-default">
+            <ul class="list-group">
+              <% @topics.each do |item| %>
+              <li class="list-group-item">
+                <div class="title">
+                  <%= render_node_name(item.node_name,item.node_id) %>
+                  <%= topic_title_tag(item) %> <%= topic_excellent_tag(item) %>
+                </div>
+                <div class="info">
+                  <span class="counter"><%= item.likes_count %> Praise <%= item.replies_count %> Reply</span>
+                </div>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-pane" id="replies">
+          <div class="panel panel-default">
+            <%= render "replies", replies: @replies %>
+          </div>
+        </div>
+        <div class="tab-pane" id="description">
+          <% cache([@user, "bio-markdown"]) do %>
+            <% if !@user.bio.blank? %>
+              <div class="panel panel-default bio">
+                <div class="panel-body markdown">
+                  <%= markdown(@user.bio) %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

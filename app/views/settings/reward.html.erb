@@ -1,0 +1,55 @@
+<div class="row">
+  <%= render 'menu' %>
+
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+            <%= simple_form_for(@user, url: setting_path, method: :put, html: { enctype:  "multipart/form-data" }) do |f| %>
+              <%= render "shared/error_messages", target: @user %>
+              <input type="hidden" name="by" value="reward" />
+
+              <% User::REWARD_FIELDS.each do |field| %>
+              <div class="form-group form-group-reward-field-<%= field %>">
+                <label class="control-label" for="user_reward_<%= field %>"><%= User.reward_field_label(field) %></label>
+                <input class="form-control" type="file" name="user[rewards][<%= field %>]" id="user_reward_<%= field %>">
+                <p class="help-block">
+                  <% if field == :alipay %>
+                 Open Alipay client: the upper right corner "+" -> I want to collect -> set the amount -> save two-dimensional code picture
+                  <% elsif field == :wechat %>
+                  Open the WeChat mobile client: the upper right corner "+" -> payment -> I want to collect -> save two-dimensional code picture
+                  <% end %>
+                </p>
+              </div>
+
+                <% if @user.reward_field(field) %>
+                <div class="form-group">
+                  <div class="reward-image">
+                    <img src="<%= @user.reward_field(field) %>" >
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+
+              <div class="form-actions hide-ios">
+                <button type="submit" class="btn btn-lg btn-primary" data-disable-with="<%= t("common.saving") %>"><%= t("users.update_profile")%></button>
+              </div>
+            <% end %>
+          </div>
+          <div class="col-md-4">
+            <div class="markdown">
+              <%= markdown("### :gift: 关于打赏\n\n
+
+             The reward function is designed to encourage sharing.
+
+              Upload your micro letter, pay treasure ** receive two-dimensional code **, after the play button will appear in the "personal home" and "article at the end" show.
+              ") %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

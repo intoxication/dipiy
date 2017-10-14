@@ -1,0 +1,12 @@
+<div class="col-sm-2 col-md-offset-1 setting-menu">
+  <div class="panel panel-default">
+    <%= render_list class: "nav nav-pills nav-stacked" do |li|
+      li << link_to(icon_tag('user-circle', label: 'Basic Information'), setting_path)
+      li << link_to(icon_tag('address-card', label: 'Details'), profile_setting_path, class: 'hide-ios')
+      li << link_to(icon_tag('qrcode', label: 'Play'), reward_setting_path)
+      li << link_to(icon_tag('gear', label: 'account settings'), account_setting_path, class: 'hide-ios')
+      li << link_to(icon_tag('keyboard-o', label: 'login password'), password_setting_path, class: 'hide-ios') unless Setting.sso_enabled?
+      li << link_to(icon_tag('cube', label: t("users.manage_my_apps")), oauth_applications_path, class: 'hide-ios')
+    end %>
+  </div>
+</div>
