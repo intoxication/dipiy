@@ -1,0 +1,36 @@
+<%= render 'node_selector', node: @topic.node %>
+
+<%= simple_form_for @topic, remote: true, html: { class: "form", tb: 'edit-topic' } do |f| %>
+  <%= render "shared/error_messages", target: @topic %>
+  <%= f.hidden_field :node_id %>
+
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default" id="node-selector-button"
+                data-toggle="modal" data-target="#node-selector"><%= @topic.node&.name || 'Select node ...' %></button>
+      </div>
+      <%= f.text_field :title, class: "form-control", placeholder: "Fill in the title here" %>
+    </div>
+  </div>
+
+  <%= render "/shared/editor_toolbar" %>
+
+  <div class="form-group">
+    <%= f.text_area :body, class: "topic-editor form-control closewarning", rows: 20 %>
+  </div>
+
+  <% if Setting.has_module?(:team) %>
+    <% if current_user.team_collection.any? %>
+    <div class='form-group'>
+      <%= f.input :team_id, collection: current_user.team_collection, include_blank: 'Do not associate the organization' %>
+    </div>
+    <% end %>
+  <% end %>
+
+  <div class="form-group hide-ios">
+    <%= f.submit t("common.save"), class: "btn btn-primary col-xs-2", 'data-disable-with' => t("common.saving"), 'data-tb' => "save-topic" %>
+
+    <div class="pull-right hide-ios"><a href="/markdown" target="_blank"><i class="fa fa-tip"></i> Typographic instructions</a></div>
+  </div>
+<% end %>

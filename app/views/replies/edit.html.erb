@@ -1,0 +1,27 @@
+<div class="edit-reply panel panel-default">
+  <div class="panel-heading">
+    Modify the replies <span class="pull-right"><%= topic_title_tag(@topic) %></span>
+  </div>
+  <div class="panel-body">
+    <%= simple_form_for([@topic, @reply], remote: true, html: { class: "", tb: 'edit-reply' }) do |f| %>
+      <%= render "shared/error_messages", target: @reply %>
+      <div class="edit-tools">
+        <%= render "/shared/editor_toolbar" %>
+      </div>
+      <div class="form-group">
+        <%= f.text_area :body, class: "topic-editor form-control", rows: 10 %>
+      </div>
+      <div class="form-group">
+        <%= f.submit t("common.save"), class: "btn btn-primary col-xs-2 hide-ios", 'data-disable-with' => t("common.saving") %>
+        <% if can? :destroy, @reply %>
+        <%= link_to "delete",[@topic,@reply], class: "pull-right btn btn-danger", method: :delete, data: { confirm: "Are you sure you want to delete this reply?？" } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="panel panel-default hide-ios">
+  <div class="panel-body">
+    <%= render "/shared/editor_help_block" %>
+  </div>
+</div>

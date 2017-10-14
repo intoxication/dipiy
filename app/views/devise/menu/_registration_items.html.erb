@@ -1,0 +1,9 @@
+<% if user_signed_in? %>
+Hello there <strong><a href="<%= user_path(current_user.login)%>"><%= current_user.login %></a></strong>,
+<% if not params[:controller].match(/admin/) %>
+  <%= link_to('Set up', setting_path) %> |
+  <% if admin? current_user %><a href="/admin">Backstage</a> | <% end %>
+<% end %>
+<% else %>
+  <%= link_to('Join the community', new_user_registration_path)  %>
+<% end %>

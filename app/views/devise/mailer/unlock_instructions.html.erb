@@ -1,0 +1,7 @@
+<p class='lead'>Hello there <%= @resource.fullname %></p>
+
+<p>Due to multiple attempts to log the wrong password, your account has been temporarily locked, the lock time is 1 hour, locked during this account will not be able to log in, can not try the password.</p>
+
+<p>You can also click on the link below to unlock now:</p>
+
+<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token), class: 'btn' %></p>

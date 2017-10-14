@@ -1,0 +1,14 @@
+<%
+  topic = notification.target
+%>
+
+<% if topic.blank? %>
+  <div class="media-body">Related information has been deleted</div>
+<% else %>
+  <div class="media-heading">
+    in <%= topic_title_tag(topic) %> Mention you：
+  </div>
+  <div class="media-content summary markdown">
+    <%= topic.body_html %>
+  </div>
+<% end %>

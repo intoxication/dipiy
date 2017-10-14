@@ -1,0 +1,8 @@
+<% topic = notification.target %>
+<% if topic.blank? %>
+  Related information has been deleted
+<% else %>
+  <div class="media-heading">
+    Created a post <%= topic_title_tag(topic) %>
+  </div>
+<% end %>

@@ -1,0 +1,38 @@
+<% title_tag t("teams.new_team") %>
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= simple_form_for @team do |f| %>
+          <%= render "shared/error_messages", target: @team %>
+
+          <%= f.input :login, placeholder: user_url('xxx').gsub('xxx', ':slug') %>
+          <%= f.input :name %>
+          <%= f.input :email %>
+          <%= f.input :bio, as: :text %>
+
+          <div class="form-group">
+            <%= f.submit t("teams.new_team"), class: "btn btn-primary btn-block", 'data-disable-with' => t("common.saving") %>
+          </div>
+
+          <div class="form-group">
+           If you find your company or team name registered, you can try to contact the administrator, we can be as coordinated as possible.
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="panel">
+      <div class="panel-heading"><%= t('teams.teams')%></div>
+      <ul class="list-group">
+        <li class="list-group-item">Company / organization brand display;</li>
+        <li class="list-group-item">Independent organization home page;</li>
+        <li class="list-group-item">Pool members in the community inside the topic;</li>
+        <li class="list-group-item">For the team to recruit talent;</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="opts">
+  <% if !turbolinks_ios? %>
+    <%= likeable_tag(@topic) %>
+    <%= topic_follow_tag(@topic) %>
+    <%= topic_favorite_tag(@topic) %>
+  <% end %>
+
+  <% if admin? %>
+    <% if !@topic.suggested_at.blank? %>
+    <%= link_to raw("<i class='fa fa-angle-double-up'></i> cancel"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
+    <% else %>
+    <%= link_to raw("<i class='fa fa-angle-double-up'></i> Sticky"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
+    <% end %>
+    <% if !@topic.excellent? %>
+    <%= link_to raw("<i class='fa fa-diamond'></i> Add fine"), action_topic_path(@topic.id, type: 'excellent'), title: "Set as the essence of posts" , method: "post", remote: true %>
+    <% end %>
+
+    <% if @topic.node_id != Node.no_point.id %>
+      <%= link_to raw("<i class='fa fa-ban'></i> shield"), ban_topic_path(@topic), remote: true, title: "Mask this sticker, move to NoPoint node" %>
+    <% end %>
+  <% end %>
+  <span class="pull-right opts">
+    <% if owner?(@topic) or admin? %>
+    <% if can?(:close, @topic) %>
+      <% if !@topic.closed? %>
+        <%= link_to raw("<i class='fa fa-check'></i>"), action_topic_path(@topic, type: 'close'), method: 'post', title: "Close discussion / issue resolved", remote: true, data: { toggle: 'tooltip' } %>
+      <% else %>
+        <%= link_to raw("<i class='fa fa-undo'></i>"), action_topic_path(@topic, type: 'open'), method: 'post', title: "Reopen the topic", remote: true, data: { toggle: 'tooltip' } %>
+      <% end %>
+    <% end %>
+    <%= link_to "", edit_topic_path(@topic), class: "fa fa-pencil", title: "Modify this post" %>
+      <% if can?(:destroy, @topic) %>
+      <%= link_to "", topic_path(@topic.id), method: :delete, remote: true, 'data-confirm': t("common.confirm_delete"), class: "fa fa-trash", title: "Delete this post" %>
+      <% end %>
+    <% end %>
+  </span>
+</div>

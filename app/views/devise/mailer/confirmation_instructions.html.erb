@@ -1,0 +1,6 @@
+<p class="lead">welcome <%= @resource.fullname %></p>
+<p>You have successfully registered<%= link_to Setting.app_name, root_url %> The account number，
+  Next you need to click on the following link <span class="text-danger">activation</span> Your account number：</p>
+<p><%= link_to 'Activate the account', confirmation_url(@resource, confirmation_token: @token), class: 'btn' %></p>
+<p>If you do not see the link, copy the following link and open it inside the browser：</p>
+<p><%= confirmation_url(@resource, confirmation_token: @token) %></p>

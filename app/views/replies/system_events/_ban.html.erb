@@ -1,0 +1,5 @@
+<% if reply.body.present? %>
+Shielding this topic：<span class="ban-reason"><%= reply.body %></span>
+<% else %>
+Content does not conform to the version of this topic
+<% end %>

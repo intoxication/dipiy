@@ -1,0 +1,18 @@
+<% reply = notification.target %>
+<% if reply.blank? %>
+  <div class="media-body">Related information has been deleted</div>
+<% else %>
+  <%
+    topic = notification.second_target || reply.topic
+  %>
+
+  <div class="media-heading">
+    In the post
+    <%= topic_title_tag(topic, reply: reply) %>Replied：
+  </div>
+  <%- if reply.present? -%>
+    <div class="media-content summary markdown">
+      <%= reply.body_html %>
+    </div>
+  <%- end -%>
+<% end %>

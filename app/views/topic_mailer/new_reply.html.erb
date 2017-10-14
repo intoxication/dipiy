@@ -1,0 +1,10 @@
+<h1>You have a new reply to your posts</h1>
+<p>
+   <%= user_name_tag(@reply.user) %>  Replied 《<%= topic_title_tag(@topic)%>》:</label> <br />
+</p>
+<blockquote>
+  <p><%= @reply.body_html %><br/></p>
+</blockquote>
+<p>
+ <label> Posts Address:</label> <%= topic_title_tag(@topic) %>.
+</p>

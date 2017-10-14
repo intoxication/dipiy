@@ -1,0 +1,68 @@
+<div id="topic-sidebar" data-spy="affix" data-offset-bottom="65">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <a href="#" class="btn btn-block btn-sm btn-move-page" data-type="top"><i class="fa fa-arrow-up"></i></a>
+      <div class="buttons">
+        <div class="group likes opts">
+          <%= likeable_tag(@topic) %>
+        </div>
+        <div class="group">
+          <div class="btn-group" role="group">
+            <%= topic_follow_tag(@topic, class: 'btn btn-default') %>
+            <%= topic_favorite_tag(@topic, class: 'btn btn-default') %>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="group">
+        <%= social_share_button_tag h("#{@topic.title}") %>
+      </div>
+      <hr />
+      <div class="reply-buttons">
+        <div class="total">
+          Received <b><%= @topic.replies_count %></b>Reply
+        </div>
+        <%= reward_user_tag(@topic.user) %>
+      </div>
+      <hr />
+      <div class="group opts">
+        <% if admin? %>
+          <div style="margin-bottom: 8px">
+            <% if !@topic.suggested_at.blank? %>
+            <%= link_to raw("<i class='fa fa-angle-double-up'></i> cancel"), unsuggest_admin_topic_path(@topic), method: :post, remote: true %>
+            <% else %>
+            <%= link_to raw("<i class='fa fa-angle-double-up'></i> Sticky"), suggest_admin_topic_path(@topic), method: :post, remote: true %>
+            <% end %>
+            <% if !@topic.excellent? %>
+            <%= link_to raw("<i class='fa fa-diamond'></i>Add fine"), action_topic_path(@topic, type: 'excellent'), method: "post", remote: true %>
+            <% end %>
+            <% if @topic.node_id != Node.no_point.id %>
+              <%= link_to raw("<i class='fa fa-ban'></i>shield"), ban_topic_path(@topic), remote: true, title: "Mask this sticker, move to NoPoint 节点" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if owner?(@topic) or admin? %>
+        <div>
+          <% if can?(:close, @topic) %>
+            <% if !@topic.closed? %>
+              <%= link_to raw("<i class='fa fa-check'></i> End"), action_topic_path(@topic, type: 'close'), method: 'post', title: "End", remote: true, data: { toggle: 'tooltip' } %>
+            <% else %>
+              <%= link_to raw("<i class='fa fa-undo'></i> 开启"), action_topic_path(@topic, type: 'open'), method: 'post', title: "Reopen the topic", remote: true, data: { toggle: 'tooltip' } %>
+            <% end %>
+          <% end %>
+          <%= link_to raw('<i class="fa fa-pencil"></i> edit'), edit_topic_path(@topic), title: "Modify this post" %>
+          <% if can?(:destroy, @topic) %>
+            <%= link_to raw('<i class="fa fa-trash"></i> delete'), topic_path(@topic.id), method: :delete, 'data-confirm' => t("common.confirm_delete"), title: "Delete this post", remote: true %>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <a href="#" class="btn btn-block btn-move-page" data-type="bottom"><i class="fa fa-arrow-down"></i></a>
+    </div>
+  </div>
+
+  <div class="notify-updated">
+    <a class="update" href="#"><i class="fa fa-bell-o"></i> <b>Have a new reply!</b>Click here to load now</a>
+  </div>
+</div>

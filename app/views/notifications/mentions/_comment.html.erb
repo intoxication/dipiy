@@ -1,0 +1,30 @@
+<%
+  comment = notification.target
+  second_target = notification.second_target
+%>
+
+<% if second_target.blank? %>
+  <div class="media-body">Related information has been deleted</div>
+<% else %>
+  <%
+  case notification.second_target_type
+  when "Post" %>
+    <% if Setting.has_module? :press %>
+    <div class="media-heading">
+      in <a href="<%= homeland_press.post_path(second_target) %>"><%= second_target.title %></a> Of the comments mentioned in you：
+    </div>
+    <div class="media-content summary markdown">
+      <%= comment.body_html %>
+    </div>
+    <% end %>
+  <% when "Page" %>
+    <% if Setting.has_module? :wiki %>
+    <div class="media-heading">
+     in <a href="<%= homeland_wiki.page_path(second_target) %>"><%= second_target.title %></a> Of the comments mentioned in you：
+    </div>
+    <div class="media-content summary markdown">
+      <%= comment.body_html %>
+    </div>
+    <% end %>
+  <% end %>
+<% end %>

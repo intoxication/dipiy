@@ -1,0 +1,11 @@
+<%
+  topic = notification.target
+  node = notification.second_target
+ %>
+<% if topic.blank? or node.blank? %>
+  Related information has been deleted
+<% else %>
+  <div class="media-heading">
+    You post the topic <%= topic_title_tag(topic) %>It was moved by the administrator for content reasons <%= render_node_name(node.name, node.id) %> Node, please note the node description.
+  </div>
+<% end %>

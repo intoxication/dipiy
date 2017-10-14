@@ -1,0 +1,30 @@
+<div class="modal" id="ban-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_for('', url: action_topic_path(topic, type: "ban"), method: "post", remote: true) do |f| %>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Choose reason</label>
+          <select class="form-control" onchange="$('#ban-modal textarea').val($(this).val())" name="reason">
+            <option value="" selected>Direct shielding</option>
+            <% Setting.ban_reason_list.each do |str| %>
+            <option value="<%= str %>"><%= str %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Or manually enter the cause:</label>
+          <textarea class="form-control" name="reason_text" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">determine</button>
+        <a class="btn btn-default" data-dismiss="modal">cancel</a>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<% if @topic.node_id == Node.no_point.id %>
+<div class="alert alert-warning alert-block">
+  <h5 class="title">This post has been temporarily blocked!</h5>
+  <div class="markdown">
+    <%= markdown @topic.node.summary %>
+  </div>
+</div>
+<% end %>

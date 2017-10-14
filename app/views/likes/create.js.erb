@@ -1,0 +1,5 @@
+<% if @success %>
+  $("#<%= @element_id %>").attr("class","icon small_liked").data("method","delete").attr("title", "Dislike");
+<% else %>
+  App.alert("Submission Failed.")
+<% end %>

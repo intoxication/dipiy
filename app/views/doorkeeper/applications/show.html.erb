@@ -1,0 +1,40 @@
+<%= render "menu" %>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><%= t('.title', name: @application.name) %></div>
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <tr>
+        <td><%= t('.application_id') %></td>
+        <td><%= @application.uid %></td>
+      </tr>
+      <tr>
+        <td><%= t('.secret') %></td>
+        <td><%= @application.secret %></td>
+      </tr>
+      <tr>
+        <td><%= t('.level') %></td>
+        <td><%= @application.level %></td>
+      </tr>
+      <tr>
+        <td><%= t('.callback_urls') %></td>
+        <td>
+          <table>
+            <% @application.redirect_uri.split.each do |uri| %>
+              <tr>
+                <td><%= uri %></td>
+                <td style="text-align:right; width: 100px;">
+                  <%= link_to t('doorkeeper.applications.buttons.authorize'), oauth_authorization_path(client_id: @application.uid, redirect_uri: uri, response_type: 'code'), class: 'btn btn-sm btn-success', target: '_blank' %>
+                </td>
+              </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="panel-footer">
+    <%= link_to "Modify the application information", edit_oauth_application_path(@application), class: 'btn btn-primary' %>
+    <%= link_to "Delete the application", oauth_application_path(@application), class: "btn btn-danger pull-right", data: { method: :delete, confirm: "Are you sure you want to delete?" } %>
+  </div>
+</div>

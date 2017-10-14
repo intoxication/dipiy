@@ -1,0 +1,20 @@
+<% title_tag 'Resend the unlock message' %>
+
+<div class="row">
+  <div class="col-md-6 col-sm-offset-3">
+    <div class="panel">
+      <div class="panel-heading">Resend the unlock message</div>
+      <div class="panel-body">
+        <%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+          <%= devise_error_messages! %>
+
+          <%= f.input :email, hint: '' %>
+
+          <div class="form-group">
+            <%= f.submit "Resend the unlock message", class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
