@@ -1,0 +1,41 @@
+<% content_for :sitemap do %>
+  <span class="current">User</span>
+<% end %>
+<div class="toolbar">
+  <form class="form-inline" action="<%= admin_users_path %>">
+    <div class="form-group">
+      <input type="text" name="q" class="form-control" value="<%= params[:q] %>" placeholder="User Name/Email" />
+    </div>
+    <div class="form-group">
+      <%= select_tag(:type, options_for_select([['
+All categories',''], ['organization','Team']], params[:type]), class: 'form-control') %>
+    </div>
+    <button class="btn btn-default">search for</button>
+  </form>
+</div>
+
+<table class="table table-bordered table-striped table-condensed">
+  <tr class="head">
+    <td class="first">#</td>
+    <td>
+account number</td>
+    <td>Name</td>
+    <td>Email</td>
+    <td>Registration time</td>
+    <td>Operating</td>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td class="first"><%= user.id %></td>
+    <td><%= user_name_tag(user) %></td>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.created_at.to_date %></td>
+    <td>
+      <%= link_to '', edit_admin_user_path(user.id), class: "fa fa-pencil" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @users %>
